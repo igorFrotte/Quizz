@@ -3,6 +3,7 @@ let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 let meusQuizzes = [];
 let quizzExibido;
+let respostaClicada;
 
 carregarTela1();
 
@@ -126,27 +127,47 @@ function aleatorizar() {
 }
 function renderizarRespostas(i) {
     let divRespostas = document.querySelector(`#perg${i} .respostas`);
+    let divPergunta = document.querySelector(`#perg${i}`);
     quizzExibido.questions[i].answers.sort(aleatorizar);
 
     for (let j=0; j<quizzExibido.questions[i].answers.length; j++) {
         divRespostas.innerHTML += `
-        <div class="resposta">
+        <div class="resposta" onclick="respostaAoClick(this,${i})">
             <img src="${quizzExibido.questions[i].answers[j].image}" class="imagem-resposta"/>
             <div class="texto-resposta">${quizzExibido.questions[i].answers[j].text}</div>
         </div>
         `
     }
 }
-function respostaAposClick(elemento) {
-    let divRespostas = elemento.parent();
+function respostaAoClick(elemento,i) {
+    let divRespostas = elemento.parentNode;
+    let divPergunta = divRespostas.parentNode;
     let todasAsRespostas = divRespostas.querySelectorAll('.resposta');
+    let textoResposta = divRespostas.querySelectorAll('.texto-resposta');
+    let jaFoiSelecionado = divRespostas.querySelector('.selecionada');
 
+    if (jaFoiSelecionado !== null) {
+        return;
+    }
     for (let i=0; i<todasAsRespostas.length; i++) {
         todasAsRespostas[i].classList.add('nao-selecionada');
     }
-
     elemento.classList.remove('nao-selecionada');
+    elemento.classList.add('selecionada');
 
+    let respostaCorreta = quizzExibido.questions[i].answers.filter((e) => e.isCorrectAnswer === true);
+
+    for (let j=0; j<textoResposta.length; j++) {
+        if (textoResposta[j].innerHTML === respostaCorreta[0].text) {
+            textoResposta[j].classList.add('correta');
+        } else {
+            textoResposta[j].classList.add('errada');
+        }
+    }
+
+    setTimeout(function(){
+        divPergunta.nextElementSibling.scrollIntoView({block: "center", inline: "nearest"});
+    },2000);
 }
 function renderizarResultado() {
     let divConteudo = document.querySelector('.conteudo-quizz');
