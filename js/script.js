@@ -99,52 +99,53 @@ function renderizarQuizz() {
             <div class="escurecido"></div>
             <div class="titulo">${quizzExibido.title}</div>
         </div>
-        <div class="conteudo-quizz">
-            <div class="resultado">
-                <div class="nivel">88% de acerto: Você é praticamente um aluno de Hogwarts!</div>
-                <div class="descricao-nivel">
-                    <img src="./images/image 10.png" class="imagem-nivel" />
-                    <div class="texto-nivel">Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</div>
-                </div>
-            </div>
-        </div>
+        <div class="conteudo-quizz"></div>
         <div class="reiniciar-quizz">Reiniciar quizz</div>
         <div class="voltar-home">Voltar para a home</div>
     </div>
     `;
     renderizarPerguntas();
+    renderizarResultado();
 }
 function renderizarPerguntas() {
     let divConteudo = document.querySelector('.conteudo-quizz');
     for (let i=0; i<quizzExibido.questions.length; i++) {
         divConteudo.innerHTML += `
-        <div class="pergunta">
+        <div class="pergunta" id="perg${i}">
             <div class="texto-pergunta">${quizzExibido.questions[i].title}</div>
-            <div class="respostas">
-                <div class="resposta nao-selecionada">
-                    <img src="./images/image 3.png" class="imagem-resposta"/>
-                    <div class="texto-resposta errada">Gatineo</div>
-                </div>
-                <div class="resposta nao-selecionada">
-                    <img src="./images/image 4.png" class="imagem-resposta"/>
-                    <div class="texto-resposta errada">Ratata</div>
-                </div>
-                <div class="resposta nao-selecionada">
-                    <img src="./images/image 7.png" class="imagem-resposta"/>
-                    <div class="texto-resposta errada">Sapo gordo</div>
-                </div>
-                <div class="resposta">
-                    <img src="./images/image 8.png" class="imagem-resposta"/>
-                    <div class="texto-resposta correta">Furão</div>
-                </div>
-            </div>
+            <div class="respostas"></div>
         </div>
         `;
+        renderizarRespostas(i);
     }
 }
-function renderizarRespostas() {
-    let divRespostas = document.querySelector('.respostas');
-
+function aleatorizar() {
+    return Math.random() - 0.5;
+}
+function renderizarRespostas(i) {
+    let divRespostas = document.querySelector(`#perg${i} .respostas`);
+    quizzExibido.questions[i].answers.sort(aleatorizar);
+    
+    for (let j=0; j<quizzExibido.questions[i].answers.length; j++) {
+        divRespostas.innerHTML += `
+        <div class="resposta">
+            <img src="${quizzExibido.questions[i].answers[j].image}" class="imagem-resposta"/>
+            <div class="texto-resposta">${quizzExibido.questions[i].answers[j].text}</div>
+        </div>
+        `
+    }
+}
+function renderizarResultado() {
+    let divConteudo = document.querySelector('.conteudo-quizz');
+    divConteudo.innerHTML += `
+    <div class="resultado">
+        <div class="nivel">88% de acerto: Você é praticamente um aluno de Hogwarts!</div>
+        <div class="descricao-nivel">
+            <img src="./images/image 10.png" class="imagem-nivel" />
+            <div class="texto-nivel">Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</div>
+        </div>
+    </div>
+    `
 }
 
 function carregarTela3(){
