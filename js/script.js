@@ -161,6 +161,89 @@ function renderizarResultado() {
     `
 }
 
+let quizzCriado = {
+    title: "",
+    image: "",
+    questions: [],
+    levels: []
+};
+
 function carregarTela3(){
-    telaPrincipal.innerHTML = ``; 
+    telaPrincipal.innerHTML = `
+    <div class="tela3">
+        <div class="criacaoTitulo">Começe pelo começo</div>
+        <div class="criacaoForm">
+            <input type="text" id="titulo">
+            <div class="erro"></div>
+            <input type="url" id="urlComeco">
+            <div class="erro"></div>
+            <input type="text" id="qtPergunta">
+            <div class="erro"></div>
+            <input type="text" id="qtNivel">
+            <div class="erro"></div>
+        </div>
+        <div class="criacaoBt" onclick='verificarComeco()'>Começe pelo começo</div>      
+    </div>
+    `; 
 }
+
+function verificarComeco(){
+    let ok = 0;
+    ok += verificarTexto(document.getElementById("titulo"),20,65);
+    ok += verificarUrl(document.getElementById("urlComeco"));
+    ok += verificarQtd(document.getElementById("qtPergunta"),3);
+    ok += verificarQtd(document.getElementById("qtNivel"),2);
+    if (ok === 0){
+        carregarParte2();
+    }
+}
+
+function carregarParte2(){
+    
+}
+
+function verificarTexto(elemento,min=0,max=Number.POSITIVE_INFINITY){
+    if(elemento.value.length < min || elemento.value.length > max){
+        elemento.nextElementSibling.innerHTML = "Nome Inválido!";
+        return 1;
+    }else { 
+        elemento.nextElementSibling.innerHTML = "";
+        return 0;
+    }
+}
+
+function verificarUrl(elemento){
+    if(!urlValida(elemento.value)){
+        elemento.nextElementSibling.innerHTML = "Url Inválida!";
+        return 1;
+    }else { 
+        elemento.nextElementSibling.innerHTML = "";
+        return 0;
+    }
+}
+
+function verificarQtd(elemento,min=0,max=Number.POSITIVE_INFINITY){
+    if(isNaN(elemento.value)){
+        elemento.nextElementSibling.innerHTML = "Digite apenas números";
+        return 1;
+    }
+    if(elemento.value < min || elemento.value > max){
+        elemento.nextElementSibling.innerHTML = "Número inválido!";
+        return 1;
+    }else { 
+        elemento.nextElementSibling.innerHTML = "";
+        return 0;
+    }
+}
+
+function urlValida(string) {
+    try {
+        let url = new URL(string);
+        return true;
+   } catch(err) {
+        return false;
+   }
+ }
+
+carregarTela3();
+
