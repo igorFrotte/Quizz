@@ -247,7 +247,6 @@ function carregarParte2(numPerguntas){
             abrirFechar(document.getElementById("tituloPerg" + (i+1)), "pergSec"+(i+1));
         }
     }
-  
 }
 
 function abrirFechar(elemento, idDoPar){
@@ -316,6 +315,3 @@ function urlValida(string) {
         return false;
    }
  }
-
- carregarParte2(3);
-
