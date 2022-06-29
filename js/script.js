@@ -1,7 +1,7 @@
 // Tela Principal - Listagem dos Quizzes
 let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
-let meusQuizzes = JSON.parse(localStorage.getItem("idQuizz"));
+let meusQuizzes = [];
 let quizzExibido;
 let respostaClicada;
 
@@ -21,13 +21,14 @@ function carregarTela1(){
     </div>
     `;
     const promessa = axios.get(url);
-    promessa.then(listarQuizzes);
+    promessa.then(listarQuizzes); 
 }
 
 function listarQuizzes(elemento){
+    meusQuizzes = JSON.parse(localStorage.getItem("idQuizz"));
     let galeria = document.querySelector(".galeriaQuizz");
     let quizz = document.querySelector(".seuQuizz");
-    listarSeusQuizzes();
+    listarSeusQuizzes(); 
     for(let i=0;i<elemento.data.length;i++){
         if(meusQuizzes.includes(elemento.data[i].id)){
             quizz.innerHTML += `
@@ -181,6 +182,161 @@ function renderizarResultado() {
     `
 }
 
+let quizzCriado = {
+    title: "",
+    image: "",
+    questions: [],
+    levels: []
+};
+
 function carregarTela3(){
-    telaPrincipal.innerHTML = ``; 
+    telaPrincipal.innerHTML = `
+    <div class="tela3">
+        <div class="criacaoTitulo">Começe pelo começo</div>
+        <div class="criacaoForm">
+            <input type="text" id="titulo" placeholder="Título do seu quizz">
+            <div class="erro"></div>
+            <input type="url" id="urlComeco" placeholder="URL da imagem do seu quizz">
+            <div class="erro"></div>
+            <input type="text" id="qtPergunta" placeholder="Quantidade de perguntas do quizz">
+            <div class="erro"></div>
+            <input type="text" id="qtNivel" placeholder="Quantidade de níveis do quizz">
+            <div class="erro"></div>
+        </div>
+        <div class="criacaoBt" onclick='verificarComeco()'>Prosseguir pra criar perguntas</div>      
+    </div>
+    `; 
 }
+
+function verificarComeco(){
+    let ok = 0;
+    ok += verificarTexto(document.getElementById("titulo"),20,65);
+    ok += verificarUrl(document.getElementById("urlComeco"));
+    ok += verificarQtd(document.getElementById("qtPergunta"),3);
+    ok += verificarQtd(document.getElementById("qtNivel"),2);
+    if (ok === 0){
+        //add no obj
+        carregarParte2(3); //lincar numPerg
+    }
+}
+
+function carregarParte2(numPerguntas){
+    telaPrincipal.innerHTML = `
+    <div class="tela3">
+        <div class="criacaoTitulo">Crie suas perguntas</div>
+        <div class="perguntas"></div>
+        <div class="criacaoBt" onclick='verificarComeco()'>Prosseguir pra criar perguntas</div>      
+    </div>
+    `;
+    for(let i=0;i<numPerguntas;i++){
+        document.querySelector(".perguntas").innerHTML += `
+        <div class="criacaoForm">
+            <div onclick="abrirFechar(this,'pergSec${i+1}')" class="criacaoMiniTitulo">Pergunta ${i+1}</div>
+            <input type="text" id="tituloPerg${i+1}" placeholder="Texto da pergunta">
+            <div class="erro"></div>
+            <input type="text" id="corPerg${i+1}" placeholder="Cor de fundo da pergunta">
+            <div class="erro"></div>
+            </br>
+            <div class="criacaoMiniTitulo">Resposta Correta</div>
+            </br>
+            <input type="text" id="corretaPerg${i+1}" placeholder="Resposta correta">
+            <div class="erro"></div>
+            <input type="text" id="urlCorretaPerg${i+1}" placeholder="URL da imagem">
+            <div class="erro"></div>
+            </br>
+            <div class="criacaoMiniTitulo">Respostas incorretas</div>
+            <input type="text" id="errada1Perg${i+1}" placeholder="Resposta incorreta 1">
+            <div class="erro"></div>
+            <input type="text" id="erradaUrl1CorretaPerg${i+1}" placeholder="URL da imagem 1">
+            <div class="erro"></div>
+            </br>
+            <input type="text" id="errada2Perg${i+1}" placeholder="Resposta incorreta 2">
+            <div class="erro"></div>
+            <input type="text" id="erradaUrl2CorretaPerg${i+1}" placeholder="URL da imagem 2">
+            <div class="erro"></div>
+            </br>
+            <input type="text" id="errada3Perg${i+1}" placeholder="Resposta incorreta 3">
+            <div class="erro"></div>
+            <input type="text" id="erradaUrl3CorretaPerg${i+1}" placeholder="URL da imagem 3">
+            <div class="erro"></div>
+        </div>
+        <div class="surdina criacaoForm">
+            <div onclick="abrirFechar(this,'tituloPerg${i+1}')" id="pergSec${i+1}" class="criacaoMiniTitulo">Pergunta ${i+1}</div>
+        </div>
+        `; 
+        if(i>0){
+            abrirFechar(document.getElementById("tituloPerg" + (i+1)), "pergSec"+(i+1));
+        }
+    }
+  
+}
+
+function abrirFechar(elemento, idDoPar){
+    elemento.parentNode.classList.toggle("surdina");
+    document.getElementById(idDoPar).parentNode.classList.toggle("surdina");
+}
+
+function verificarParte2(){
+
+}
+
+function verificarTexto(elemento,min=0,max=Number.POSITIVE_INFINITY){
+    if(elemento.value.length === 0 && min !== 0){
+        elemento.nextElementSibling.innerHTML = "Texto não pode estar vazio";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else if(elemento.value.length < min){
+        elemento.nextElementSibling.innerHTML = "Deve ter no mínimo " + min + "caracteres";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else if(elemento.value.length > max){
+        elemento.nextElementSibling.innerHTML = "Deve ter no máximo " + max + "caracteres";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else { 
+        elemento.nextElementSibling.innerHTML = "";
+        return 0;
+    }
+}
+
+function verificarUrl(elemento){
+    if(!urlValida(elemento.value)){
+        elemento.nextElementSibling.innerHTML = "Url Inválida!";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else { 
+        elemento.nextElementSibling.innerHTML = "";
+        return 0;
+    }
+}
+
+function verificarQtd(elemento,min=0,max=Number.POSITIVE_INFINITY){
+    if(isNaN(elemento.value)){
+        elemento.nextElementSibling.innerHTML = "Digite apenas números";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else if(elemento.value < min){
+        elemento.nextElementSibling.innerHTML = "Número de no mínimo " + min;
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else if(elemento.value > max){
+        elemento.nextElementSibling.innerHTML = "Número de no máximo " + max;
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else { 
+        elemento.nextElementSibling.innerHTML = "";
+        return 0;
+    }
+}
+
+function urlValida(string) {
+    try {
+        let url = new URL(string);
+        return true;
+   } catch(err) {
+        return false;
+   }
+ }
+
+ carregarParte2(3);
+
