@@ -1,6 +1,8 @@
+// Tela Principal - Listagem dos Quizzes
 let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 let meusQuizzes = JSON.parse(localStorage.getItem("idQuizz"));
+let quizzExibido;
 
 carregarTela1();
 
@@ -76,10 +78,73 @@ function listarSeusQuizzes(){
     }
 }
 
+//Tela de Exibição de um Quizz
 function carregarTela2(idQuizz){ // id do quizz a ser exibido
+    const promessa = axios.get(url);
+    promessa.then(function (elemento) {
+        for (let i=0; i<elemento.data.length; i++) {
+            if (elemento.data[i].id === idQuizz) {
+                quizzExibido = elemento.data[i];
+            }
+        }
+        renderizarQuizz();
+    });
+}
+
+function renderizarQuizz() {
     telaPrincipal.innerHTML = `
-    Deixei no jeito pra vc fazer o HTML aqui :) 
-    `; 
+    <div class="tela2">
+        <div class="capa">
+            <img src="${quizzExibido.image}" class="imagem-capa" />
+            <div class="escurecido"></div>
+            <div class="titulo">${quizzExibido.title}</div>
+        </div>
+        <div class="conteudo-quizz">
+            <div class="resultado">
+                <div class="nivel">88% de acerto: Você é praticamente um aluno de Hogwarts!</div>
+                <div class="descricao-nivel">
+                    <img src="./images/image 10.png" class="imagem-nivel" />
+                    <div class="texto-nivel">Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</div>
+                </div>
+            </div>
+        </div>
+        <div class="reiniciar-quizz">Reiniciar quizz</div>
+        <div class="voltar-home">Voltar para a home</div>
+    </div>
+    `;
+    renderizarPerguntas();
+}
+function renderizarPerguntas() {
+    let divConteudo = document.querySelector('.conteudo-quizz');
+    for (let i=0; i<quizzExibido.questions.length; i++) {
+        divConteudo.innerHTML += `
+        <div class="pergunta">
+            <div class="texto-pergunta">${quizzExibido.questions[i].title}</div>
+            <div class="respostas">
+                <div class="resposta nao-selecionada">
+                    <img src="./images/image 3.png" class="imagem-resposta"/>
+                    <div class="texto-resposta errada">Gatineo</div>
+                </div>
+                <div class="resposta nao-selecionada">
+                    <img src="./images/image 4.png" class="imagem-resposta"/>
+                    <div class="texto-resposta errada">Ratata</div>
+                </div>
+                <div class="resposta nao-selecionada">
+                    <img src="./images/image 7.png" class="imagem-resposta"/>
+                    <div class="texto-resposta errada">Sapo gordo</div>
+                </div>
+                <div class="resposta">
+                    <img src="./images/image 8.png" class="imagem-resposta"/>
+                    <div class="texto-resposta correta">Furão</div>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+}
+function renderizarRespostas() {
+    let divRespostas = document.querySelector('.respostas');
+
 }
 
 function carregarTela3(){
