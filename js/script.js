@@ -116,6 +116,7 @@ function renderizarPerguntas() {
             <div class="respostas"></div>
         </div>
         `;
+        document.querySelector(`#perg${i} .texto-pergunta`).style.backgroundColor = quizzExibido.questions[i].color;
         renderizarRespostas(i);
     }
 }
@@ -125,7 +126,7 @@ function aleatorizar() {
 function renderizarRespostas(i) {
     let divRespostas = document.querySelector(`#perg${i} .respostas`);
     quizzExibido.questions[i].answers.sort(aleatorizar);
-    
+
     for (let j=0; j<quizzExibido.questions[i].answers.length; j++) {
         divRespostas.innerHTML += `
         <div class="resposta">
@@ -134,6 +135,17 @@ function renderizarRespostas(i) {
         </div>
         `
     }
+}
+function respostaAposClick(elemento) {
+    let divRespostas = elemento.parent();
+    let todasAsRespostas = divRespostas.querySelectorAll('.resposta');
+
+    for (let i=0; i<todasAsRespostas.length; i++) {
+        todasAsRespostas[i].classList.add('nao-selecionada');
+    }
+
+    elemento.classList.remove('nao-selecionada');
+
 }
 function renderizarResultado() {
     let divConteudo = document.querySelector('.conteudo-quizz');
