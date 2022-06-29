@@ -1,6 +1,6 @@
 let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
-let meusQuizzes = JSON.parse(localStorage.getItem("idQuizz"));
+let meusQuizzes = [];
 
 carregarTela1();
 
@@ -18,13 +18,14 @@ function carregarTela1(){
     </div>
     `;
     const promessa = axios.get(url);
-    promessa.then(listarQuizzes);
+    promessa.then(listarQuizzes); 
 }
 
 function listarQuizzes(elemento){
+    meusQuizzes = JSON.parse(localStorage.getItem("idQuizz"));
     let galeria = document.querySelector(".galeriaQuizz");
     let quizz = document.querySelector(".seuQuizz");
-    listarSeusQuizzes();
+    listarSeusQuizzes(); 
     for(let i=0;i<elemento.data.length;i++){
         if(meusQuizzes.includes(elemento.data[i].id)){
             quizz.innerHTML += `
