@@ -488,7 +488,7 @@ function criadoComSucesso(id){
     let meus = JSON.parse(localStorage.getItem("idQuizz"));
     let meusId = meus.push(id);
     localStorage.setItem("idQuizz", JSON.stringify([meusId]));
-    // chamar a função dela
+    carregarTela3ponto4(id);
 }
 
 function erroNaCriacao(erro){
