@@ -9,22 +9,28 @@ body {
     background-color: #FAFAFA;
 }
 .topo {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 70px;
     background: #EC362D;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    overflow: hidden;
+}
+.topo > p {
     font-weight: 700;
     font-size: 37px;
     line-height: 43px;
     color: #FFFFFF;
-    z-index: 5;
     cursor: pointer;
+    z-index: 5;
 }
 .tela {
     margin-top: 70px;
@@ -170,7 +176,7 @@ body {
     font-size: 39px;
     line-height: 227px;
     text-align: center;
-    word-wrap: break-word;
+    word-break: break-word;
     overflow: hidden;
 
     position: absolute;
@@ -192,16 +198,22 @@ body {
 }
 .texto-pergunta {
     width: 100%;
-    height: 138px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 22px;
+    padding-bottom: 22px;
     margin-bottom: 20px;
-    background-color: #434CA0;
-    word-wrap: break-word;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.texto-pergunta > p {
     color: #FFFFFF;
     font-weight: 700;
     font-size: 23px;
-    line-height: 138px;
+    line-height: 26.95px;
     text-align: center;
+    word-break: break-word;
 }
 .respostas {
     width: 100%;
@@ -235,6 +247,7 @@ body {
     font-weight: 700;
     font-size: 20px;
     line-height: 23.44px;
+    word-break: break-word;
 }
 .correta {
     color: #009C22;
@@ -252,15 +265,23 @@ body {
 }
 .nivel {
     width: 100%;
-    height: 99px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 22px;
+    padding-bottom: 22px;
     margin-bottom: 18px;
     background-color: #EC362D;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nivel > p {
     color: #FFFFFF;
     font-weight: 700;
     font-size: 23px;
-    line-height: 99px;
+    line-height: 22.27px;
     text-align: center;
+    word-break: break-word;
 }
 .descricao-nivel {
     width: 100%;
@@ -386,6 +407,64 @@ body {
     display: none;
 }
 
+/*Começo da tela 3.4*/
+.tela3ponto4 > p {
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 26.95px;
+    margin: 141px auto 46px auto;
+}
+.capa-sucesso {
+    width: 500px;
+    height: 266px;
+    border-radius: 5px;
+}
+.capa-sucesso > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.capa-sucesso > p {
+    position: absolute;
+    height: 54px;
+    left: 18px;
+    bottom: 10px;
+
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 23px;
+    line-height: 26.95px;
+
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    word-break: break-word;
+}
+.capa-sucesso > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%);
+    border-radius: 5px;
+    z-index: 1;
+}
+.acessar-quizz {
+    width: 261.18px;
+    height: 52px;
+    margin: 0px auto 20px auto;
+    border-radius: 15px;
+    background-color: #EC362D;
+    cursor: pointer;
+
+    color: #FFF5F4;
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 52px;
+    text-align: center;
+}
+
 /* Responsividade */
 
 @media (max-width: 1100px) {
@@ -428,10 +507,9 @@ body {
     padding: 18px;
     margin-bottom: 28px;
 }
-.texto-pergunta {
-    height: 89px;
-    line-height: 89px;
+.texto-pergunta > p {
     font-size: 19px;
+    line-height: 22.27px;
 }
 .resposta {
     width: 47%;
