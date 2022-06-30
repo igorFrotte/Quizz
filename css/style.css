@@ -353,6 +353,14 @@ body {
     color: #EC362D;
     margin-left: 5px;
 }
+.exp {
+    display: flex;
+    justify-content: space-between;
+}
+.exp img {
+    width: 25px;
+    height: 25px;
+}
 .criacaoBt {
     width: 360px;
     height: 54px;
