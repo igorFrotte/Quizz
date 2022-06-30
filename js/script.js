@@ -3,7 +3,6 @@ let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes";
 let meusQuizzes = [];
 
-carregarTela3ponto4(2);
 function recarregar() {
     window.location.reload();
 }
