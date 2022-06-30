@@ -4,6 +4,7 @@ let url = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 let meusQuizzes = [];
 let quizzExibido;
 let respostaClicada;
+let contAcertos = 0;
 
 carregarTela1();
 
@@ -107,7 +108,6 @@ function renderizarQuizz() {
     </div>
     `;
     renderizarPerguntas();
-    renderizarResultado();
 }
 function renderizarPerguntas() {
     let divConteudo = document.querySelector('.conteudo-quizz');
@@ -165,23 +165,38 @@ function respostaAoClick(elemento,i) {
         }
     }
 
+    if (respostaCorreta[0].text === elemento.querySelector('.texto-resposta').innerHTML) {
+        contAcertos += 1;
+    }
+
+    if (document.querySelectorAll('.selecionada').length === quizzExibido.questions.length) {
+        renderizarResultado();
+    }
+
     setTimeout(function(){
         divPergunta.nextElementSibling.scrollIntoView({block: "center", inline: "nearest"});
     },2000);
 }
 function renderizarResultado() {
     let divConteudo = document.querySelector('.conteudo-quizz');
+    const porcentAcerto = Math.round((contAcertos/Number(quizzExibido.questions.length))*100);
+    const niveis = quizzExibido.levels;
+
+    niveis.filter((e) => (porcentAcerto >= e.minValue));
+
     divConteudo.innerHTML += `
     <div class="resultado">
-        <div class="nivel">88% de acerto: Você é praticamente um aluno de Hogwarts!</div>
+        <div class="nivel">${porcentAcerto}% de acerto: ${niveis[0].title}</div>
         <div class="descricao-nivel">
-            <img src="./images/image 10.png" class="imagem-nivel" />
-            <div class="texto-nivel">Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</div>
+            <img src="${niveis[0].image}" class="imagem-nivel" />
+            <div class="texto-nivel">${niveis[0].text}</div>
         </div>
     </div>
     `
 }
 
+
+/*Tela de Criação de um Quizz
 let quizzCriado = {
     title: "",
     image: "",
@@ -339,4 +354,4 @@ function urlValida(string) {
  }
 
  carregarParte2(3);
-
+*/
