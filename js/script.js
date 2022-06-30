@@ -257,8 +257,8 @@ function reiniciar() { //Reiniciar quizz
 let quizzCriado = {
     title: "",
     image: "",
-    questions: [3],
-    levels: [2]
+    questions: [],
+    levels: []
 }; // mudaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar
 
 function carregarTela3(){
@@ -316,23 +316,23 @@ function carregarParte2(numPerguntas){
             </br>
             <input type="text" id="corretaPerg${i+1}" placeholder="Resposta correta">
             <div class="erro"></div>
-            <input type="text" id="urlCorretaPerg${i+1}" placeholder="URL da imagem">
+            <input type="url" id="urlCorretaPerg${i+1}" placeholder="URL da imagem">
             <div class="erro"></div>
             </br>
             <div class="criacaoMiniTitulo">Respostas incorretas</div>
             <input type="text" id="errada1Perg${i+1}" placeholder="Resposta incorreta 1">
             <div class="erro"></div>
-            <input type="text" id="erradaUrl1Perg${i+1}" placeholder="URL da imagem 1">
+            <input type="url" id="erradaUrl1Perg${i+1}" placeholder="URL da imagem 1">
             <div class="erro"></div>
             </br>
             <input type="text" id="errada2Perg${i+1}" placeholder="Resposta incorreta 2">
             <div class="erro"></div>
-            <input type="text" id="erradaUrl2Perg${i+1}" placeholder="URL da imagem 2">
+            <input type="url" id="erradaUrl2Perg${i+1}" placeholder="URL da imagem 2">
             <div class="erro"></div>
             </br>
             <input type="text" id="errada3Perg${i+1}" placeholder="Resposta incorreta 3">
             <div class="erro"></div>
-            <input type="text" id="erradaUrl3Perg${i+1}" placeholder="URL da imagem 3">
+            <input type="url" id="erradaUrl3Perg${i+1}" placeholder="URL da imagem 3">
             <div class="erro"></div>
         </div>
         <div class="surdina criacaoForm exp">
@@ -346,15 +346,9 @@ function carregarParte2(numPerguntas){
     }
 }
 
-function abrirFechar(elemento, idDoPar){
-    elemento.parentNode.classList.toggle("surdina");
-    document.getElementById(idDoPar).parentNode.classList.toggle("surdina");
-}
-
 function verificarParte2(){
     let ok = 0;
     let nPerg = quizzCriado.questions[0];
-    quizzCriado.questions = [];
     let nsResp = [];
     for(let i=0;i<nPerg;i++){
         ok += verificarTexto(document.getElementById("tituloPerg"+(i+1)),20);
@@ -377,7 +371,9 @@ function verificarParte2(){
         }
         nsResp.push(nResp);
     } 
+    console.log("ok é "+ok);
     if (ok === 0){
+        quizzCriado.questions = [];
         for(let i=0;i<nPerg;i++){
             let objPerg ={
                 title: "",
@@ -394,18 +390,16 @@ function verificarParte2(){
             
             objResp.text = document.getElementById("corretaPerg"+(i+1)).value;
             objResp.image = document.getElementById("urlCorretaPerg"+(i+1)).value;
-            objResp.isCorrectAnswer = true;
             console.log(objResp);
             objPerg.answers.push(objResp);
             for(let h=0;h<nsResp[i];h++){
                 let objResp2 ={
                     text: "",
                     image: "",
-                    isCorrectAnswer: true
+                    isCorrectAnswer: false
                 };
                 objResp2.text = document.getElementById("errada"+ (h+1) +"Perg"+(i+1)).value;
                 objResp2.image = document.getElementById("erradaUrl"+ (h+1) +"Perg"+(i+1)).value;
-                objResp2.isCorrectAnswer = false;
                 objPerg.answers.push(objResp2);    
             }    
         quizzCriado.questions.push(objPerg);
@@ -415,11 +409,98 @@ function verificarParte2(){
 }
 
 function carregarParte3(numNiveis){
-    alert("oi");
-    console.log(quizzCriado);
     telaPrincipal.innerHTML = `
-    
+    <div class="tela3">
+        <div class="criacaoTitulo">Agora, decida os níveis</div>
+        <div class="niveis"></div>
+        <div class="criacaoBt" onclick='verificarParte3()'>Finalizar Quizz</div>      
+    </div>
     `;
+    for(let i=0;i<numNiveis;i++){
+        document.querySelector(".niveis").innerHTML += `
+        <div class="criacaoForm">
+            <div onclick="abrirFechar(this,'nivelSec${i+1}')" class="criacaoMiniTitulo">Nível ${i+1}</div>
+            <input type="text" id="tituloNivel${i+1}" placeholder="Título do nível">
+            <div class="erro"></div>
+            <input type="text" class="cadaNivel" id="porcNivel${i+1}" placeholder="% de acerto mínima">
+            <div class="erro"></div>
+            <input type="url" id="urlNivel${i+1}" placeholder="URL da imagem do nível">
+            <div class="erro"></div>
+            <input type="text" id="descNivel${i+1}" placeholder="Descrição do nível">
+            <div class="erro"></div>
+        </div>
+        <div class="surdina criacaoForm exp">
+            <div id="nivelSec${i+1}" class="criacaoMiniTitulo">Nível ${i+1}</div>
+            <img onclick="abrirFechar(this,'tituloNivel${i+1}')" src="./images/edit.png" > 
+        </div>
+        `; 
+        if(i>0){
+            abrirFechar(document.getElementById("tituloNivel" + (i+1)), "nivelSec"+(i+1));
+        }
+    }
+}
+
+function verificarParte3(){
+    let ok = 0;
+    let nNiveis =2;//quizzCriado.levels[0];
+    let semPorc0 = 0;
+    for(let i=0;i<nNiveis;i++){
+        ok += verificarTexto(document.getElementById("tituloNivel"+(i+1)),10);
+        ok += verificarQtd(document.getElementById("porcNivel"+(i+1)),0,100);
+        ok += verificarUrl(document.getElementById("urlNivel"+(i+1)));
+        ok += verificarTexto(document.getElementById("descNivel"+(i+1)),30);      
+        if(document.getElementById("porcNivel"+(i+1)).value == 0){
+            semPorc0 += 1;
+        }
+    }
+    if(semPorc0 === 0){
+        ok += semNivel0();
+    }
+    ok += niveisIguais(); //verifica niveis iguais
+    if (ok === 0){
+        quizzCriado.levels = [];
+        alert("oi");
+    }
+}
+
+function abrirFechar(elemento, idDoPar){
+    elemento.parentNode.classList.toggle("surdina");
+    document.getElementById(idDoPar).parentNode.classList.toggle("surdina");
+}
+
+function semNivel0(){
+    let niveis = document.querySelectorAll(".cadaNivel");
+    for(let i=0;i<niveis.length;i++){
+        verificacaoExtra(niveis[i],-1);
+    }
+    return 1;
+}
+function niveisIguais(){
+    let niDOM = document.querySelectorAll(".cadaNivel");
+    let niveis = [];
+    for(let i=0;i<niDOM.length;i++){
+        niveis.push(niDOM[i].value);
+    }
+    for(let i=0;i<niveis.length;i++){
+        let filtro = niveis.filter((e) => e === niveis[i]);
+        if(filtro.length > 1){
+            let ni = document.querySelectorAll(".cadaNivel");
+            for(let j=0;j<ni.length;j++){
+                verificacaoExtra(ni[j],-2);
+            }
+            return 1;
+        }
+    }return 0;
+}
+
+function verificacaoExtra(elemento,num){
+    if(num === -1){
+        elemento.nextElementSibling.innerHTML = "Deve ter pelo menos um nível com mínimo de 0%";
+        elemento.style.backgroundColor = "#FFE9E9";
+    }else if(num === -2){
+        elemento.nextElementSibling.innerHTML = "Níveis mínimos devem ser diferentes";
+        elemento.style.backgroundColor = "#FFE9E9";
+    }
 }
 
 function verificarCor(elemento){
@@ -475,6 +556,10 @@ function verificarQtd(elemento,min=0,max=Number.POSITIVE_INFINITY){
         elemento.nextElementSibling.innerHTML = "Digite apenas números";
         elemento.style.backgroundColor = "#FFE9E9";
         return 1;
+    }else if(elemento.value.length === 0){
+        elemento.nextElementSibling.innerHTML = "Digite um número";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
     }else if(elemento.value < min){
         elemento.nextElementSibling.innerHTML = "Número de no mínimo " + min;
         elemento.style.backgroundColor = "#FFE9E9";
@@ -507,4 +592,4 @@ function urlValida(string) {
     } return false;
  }
 
- /* carregarParte2(3); */
+ 
