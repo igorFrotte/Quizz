@@ -3,6 +3,7 @@ let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes";
 let meusQuizzes = [];
 
+carregarTela3ponto4(2);
 function recarregar() {
     window.location.reload();
 }
@@ -637,14 +638,16 @@ function urlValida(string) {
  function renderizarTela3ponto4(idQuizz) {
     telaPrincipal.innerHTML = `
     <div class="tela3ponto4">
-        <p>Seu quiz está pronto!</p>
-        <div class="capa-sucesso">
-            <img src="${quizzExibido.image}" />
-            <p>${quizzExibido.title}</p>
-            <div></div>
+        <div class="conteudo-sucesso">
+            <p>Seu quiz está pronto!</p>
+            <div class="capa-sucesso">
+                <img src="${quizzExibido.image}" />
+                <p>${quizzExibido.title}</p>
+                <div></div>
+            </div>
+            <div class="acessar-quizz" onclick="carregarTela2(${idQuizz})">Acessar quizz</div>
+            <div class="voltar-home" onclick="carregarTela1()">Voltar para a home</div>
         </div>
-        <div class="acessar-quizz" onclick="carregarTela2(${idQuizz})">Acessar quizz</div>
-        <div class="voltar-home" onclick="carregarTela1()">Voltar para a home</div>
     </div>
     `;
  }

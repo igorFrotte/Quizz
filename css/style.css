@@ -408,21 +408,30 @@ body {
 }
 
 /*Começo da tela 3.4*/
-.tela3ponto4 > p {
+.conteudo-sucesso {
+    width: 500px;
+    margin: 135px auto 0px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.conteudo-sucesso > p {
     font-weight: 700;
     font-size: 23px;
     line-height: 26.95px;
-    margin: 141px auto 46px auto;
+    margin-bottom: 46px;
 }
 .capa-sucesso {
-    width: 500px;
+    width: 100%;
     height: 266px;
-    border-radius: 5px;
+    margin-bottom: 45px;
+    position: relative;
 }
 .capa-sucesso > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 5px;
 }
 .capa-sucesso > p {
     position: absolute;
@@ -539,5 +548,23 @@ body {
     width: 100%;
     height: auto;
     margin-bottom: 9px;
+}
+/*Tela 3.4*/
+.conteudo-sucesso {
+    width: 90%;
+    margin: 108px auto 38px auto;
+}
+.capa-sucesso {
+    margin-bottom: 24px;
+}
+.acessar-quizz {
+    width: 221px;
+    height: 44px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 44px;
+}
+.voltar-home {
+    font-size: 18px;
 }
 }
