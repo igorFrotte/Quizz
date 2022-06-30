@@ -23,6 +23,7 @@ body {
     line-height: 43px;
     color: #FFFFFF;
     z-index: 5;
+    cursor: pointer;
 }
 .tela {
     margin-top: 70px;
@@ -74,6 +75,7 @@ body {
     background: #FAFAFA;
     border: 1px dashed #EC362D;
     border-radius: 50px;
+    cursor: pointer;
 }
 .miniTitulo {
     display: flex;
@@ -104,6 +106,7 @@ body {
     margin-bottom: 12px;
     width: 340px;
     height: 181px;
+    cursor: pointer;
 }
 .galeriaQuizz > div > div{
     position: absolute;
@@ -210,6 +213,7 @@ body {
     width: 329.91px;
     height: 213px;
     margin-bottom: 19px;
+    cursor: pointer;
 
     display: flex;
     flex-direction: column;
@@ -289,7 +293,7 @@ body {
     text-align: center;
 }
 .voltar-home {
-    margin: 0px auto;
+    margin: 0px auto 30px auto;
     cursor: pointer;
 
     color: #818181;

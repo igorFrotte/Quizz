@@ -1,10 +1,11 @@
-// Tela Principal - Listagem dos Quizzes
+//1.Tela Principal - Listagem dos Quizzes
 let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
 let meusQuizzes = [];
-let quizzExibido;
-let respostaClicada;
-let contAcertos = 0;
+
+function recarregar() {
+    window.location.reload();
+}
 
 carregarTela1();
 
@@ -81,7 +82,12 @@ function listarSeusQuizzes(){
     }
 }
 
-//Tela de Exibição de um Quizz
+//2.Tela de Exibição de um Quizz
+let quizzExibido;
+let respostaClicada;
+let contAcertos = 0;
+
+    //Buscar o elemento pai do ID (o objeto do Quizz a ser exibido)
 function carregarTela2(idQuizz){ // id do quizz a ser exibido
     const promessa = axios.get(url);
     promessa.then(function (elemento) {
@@ -93,8 +99,8 @@ function carregarTela2(idQuizz){ // id do quizz a ser exibido
         renderizarQuizz();
     });
 }
-
-function renderizarQuizz() {
+    
+function renderizarQuizz() { //Inserir o HTML do quizz
     telaPrincipal.innerHTML = `
     <div class="tela2">
         <div class="capa">
@@ -103,13 +109,15 @@ function renderizarQuizz() {
             <div class="titulo">${quizzExibido.title}</div>
         </div>
         <div class="conteudo-quizz"></div>
-        <div class="reiniciar-quizz">Reiniciar quizz</div>
-        <div class="voltar-home">Voltar para a home</div>
+        <div class="reiniciar-quizz" onclick="reiniciar()">Reiniciar quizz</div>
+        <div class="voltar-home" onclick="carregarTela1()">Voltar para a home</div>
     </div>
     `;
     renderizarPerguntas();
+    document.querySelector('.capa').scrollIntoView({block: "center", inline: "nearest"});
 }
-function renderizarPerguntas() {
+
+function renderizarPerguntas() { //Renderizar as perguntas de acordo com o tamanho do array de quizzExibido.questions
     let divConteudo = document.querySelector('.conteudo-quizz');
     for (let i=0; i<quizzExibido.questions.length; i++) {
         divConteudo.innerHTML += `
@@ -122,12 +130,13 @@ function renderizarPerguntas() {
         renderizarRespostas(i);
     }
 }
-function aleatorizar() {
+
+function aleatorizar() { //Embaralhar o array de respostas de cada pergunta
     return Math.random() - 0.5;
 }
-function renderizarRespostas(i) {
+
+function renderizarRespostas(i) { //Renderizar as respostas de acordo com o tamanho do array de quizzExibido.questions[i].answers, sendo 'i' o índice da pergunta
     let divRespostas = document.querySelector(`#perg${i} .respostas`);
-    let divPergunta = document.querySelector(`#perg${i}`);
     quizzExibido.questions[i].answers.sort(aleatorizar);
 
     for (let j=0; j<quizzExibido.questions[i].answers.length; j++) {
@@ -139,64 +148,112 @@ function renderizarRespostas(i) {
         `
     }
 }
-function respostaAoClick(elemento,i) {
+    
+function respostaAoClick(elemento,i) { //Efeito selecionado e troca de cor, de acordo com resposta
     let divRespostas = elemento.parentNode;
     let divPergunta = divRespostas.parentNode;
     let todasAsRespostas = divRespostas.querySelectorAll('.resposta');
     let textoResposta = divRespostas.querySelectorAll('.texto-resposta');
-    let jaFoiSelecionado = divRespostas.querySelector('.selecionada');
 
+    //Caso já exista uma resposta com a classe 'selecionada', o script para a execução
+    let jaFoiSelecionado = divRespostas.querySelector('.selecionada');
     if (jaFoiSelecionado !== null) {
         return;
     }
+    //Caso não exista, a classe 'nao-selecionada' será adicionada a todas as respostas e retirada do elemento clicado, 
+    //que também recebe a classe 'selecionada'
     for (let i=0; i<todasAsRespostas.length; i++) {
         todasAsRespostas[i].classList.add('nao-selecionada');
     }
     elemento.classList.remove('nao-selecionada');
     elemento.classList.add('selecionada');
 
-    let respostaCorreta = quizzExibido.questions[i].answers.filter((e) => e.isCorrectAnswer === true);
+    let respostaCorreta = quizzExibido.questions[i].answers.filter((e) => e.isCorrectAnswer === true); //É realizado um filtro apenas do elemento do array de respostas que possui a propriedade 'isCorrectAnswer' como true
 
-    for (let j=0; j<textoResposta.length; j++) {
+    for (let j=0; j<textoResposta.length; j++) { //São verificadas todas as respostas e, caso o seu texto seja igual à resposta correta, adiciona-se a classe 'correta'
         if (textoResposta[j].innerHTML === respostaCorreta[0].text) {
             textoResposta[j].classList.add('correta');
-        } else {
+        } else { //Caso contrário, adiciona-se a classe 'errada'
             textoResposta[j].classList.add('errada');
         }
     }
 
-    if (respostaCorreta[0].text === elemento.querySelector('.texto-resposta').innerHTML) {
+    if (respostaCorreta[0].text === elemento.querySelector('.texto-resposta').innerHTML) { //Se o texto da resposta selecionada for igual à resposta correta, soma-se um acerto
         contAcertos += 1;
     }
 
-    if (document.querySelectorAll('.selecionada').length === quizzExibido.questions.length) {
+    if (document.querySelectorAll('.selecionada').length === quizzExibido.questions.length) { //Se o número de respostas selecionadas for igual ao número de perguntas, renderizar o resultado
         renderizarResultado();
     }
 
-    setTimeout(function(){
-        divPergunta.nextElementSibling.scrollIntoView({block: "center", inline: "nearest"});
+    setTimeout(function(){ //Após dois segundos do clique na resposta, faça aparecer o próximo elemento
+        if (divPergunta.nextElementSibling === null) {
+            document.querySelector('.resultado').scrollIntoView({block: "center", inline: "nearest"});
+        } else {
+            divPergunta.nextElementSibling.scrollIntoView({block: "center", inline: "nearest"});
+        }
     },2000);
 }
-function renderizarResultado() {
-    let divConteudo = document.querySelector('.conteudo-quizz');
-    const porcentAcerto = Math.round((contAcertos/Number(quizzExibido.questions.length))*100);
+
+function renderizarResultado() { //Inserir o HTML do resultado do quizz
+    const porcentAcerto = Math.round((contAcertos/Number(quizzExibido.questions.length))*100); //A porcentagem de acerto é o arredondamento da divisão da quantidade de acertos pela quantidade de questões (x100)
+
+    //Se a porcentagem de acerto for maior do que o valor mínimo do nível e menor do que o valor mínimo do nível seguinte,
+    //deve-se adicionar o título, imagem e descrição daquele nível.
+    //Caso seja o último nível, deve-se verificar apenas se a porcentagem de acerto é maior do que o valor mínimo do nível
+    let tituloNivel = "";
+    let imagemNivel = "";
+    let descricaoNivel = "";
+    
     const niveis = quizzExibido.levels;
+    for (let i=0; i<niveis.length; i++) {
+        if (porcentAcerto >= niveis[i].minValue && niveis[i+1] === undefined) {
+            tituloNivel = niveis[i].title;
+            imagemNivel = niveis[i].image;
+            descricaoNivel = niveis[i].text;
+        } else if (porcentAcerto >= niveis[i].minValue && porcentAcerto < niveis[i+1].minValue) {
+            tituloNivel = niveis[i].title;
+            imagemNivel = niveis[i].image;
+            descricaoNivel = niveis[i].text;
+        }
+    }
 
-    niveis.filter((e) => (porcentAcerto >= e.minValue));
-
+    //Renderizar o resultado na div com classe 'conteudo-quizz'
+    let divConteudo = document.querySelector('.conteudo-quizz');
     divConteudo.innerHTML += `
     <div class="resultado">
-        <div class="nivel">${porcentAcerto}% de acerto: ${niveis[0].title}</div>
+        <div class="nivel">${porcentAcerto}% de acerto: ${tituloNivel}</div>
         <div class="descricao-nivel">
-            <img src="${niveis[0].image}" class="imagem-nivel" />
-            <div class="texto-nivel">${niveis[0].text}</div>
+            <img src="${imagemNivel}" class="imagem-nivel" />
+            <div class="texto-nivel">${descricaoNivel}</div>
         </div>
     </div>
     `
 }
 
+function reiniciar() { //Reiniciar quizz
+    document.querySelector('.capa').scrollIntoView({block: "center", inline: "nearest"});
+    contAcertos = 0;
 
-/*Tela de Criação de um Quizz
+    let indice=0;
+    while (document.querySelectorAll('.selecionada').length !== 0) {
+        document.querySelectorAll('.selecionada')[indice].classList.remove('selecionada');
+    }
+    while (document.querySelectorAll('.nao-selecionada').length !== 0) {
+        document.querySelectorAll('.nao-selecionada')[indice].classList.remove('nao-selecionada');
+    }
+    while (document.querySelectorAll('.correta').length !== 0) {
+        document.querySelectorAll('.correta')[indice].classList.remove('correta');
+    }
+    while (document.querySelectorAll('.errada').length !== 0) {
+        document.querySelectorAll('.errada')[indice].classList.remove('errada');
+    }
+
+    document.querySelector('.resultado').parentNode.removeChild(document.querySelector('.resultado'));
+}
+
+
+//3.Tela de Criação de um Quizz
 let quizzCriado = {
     title: "",
     image: "",
@@ -283,7 +340,6 @@ function carregarParte2(numPerguntas){
             abrirFechar(document.getElementById("tituloPerg" + (i+1)), "pergSec"+(i+1));
         }
     }
-  
 }
 
 function abrirFechar(elemento, idDoPar){
@@ -352,6 +408,3 @@ function urlValida(string) {
         return false;
    }
  }
-
- carregarParte2(3);
-*/
