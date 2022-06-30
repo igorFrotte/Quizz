@@ -50,12 +50,6 @@ function listarQuizzes(elemento){
             `;
         }
     }
-    if(meusQuizzes.length%3 === 1){
-        quizz.innerHTML += "<div></div><div></div>";
-    }
-    if(meusQuizzes.length%3 === 2){
-        quizz.innerHTML += "<div></div>";
-    }
 }
 
 function listarSeusQuizzes(){
@@ -487,6 +481,10 @@ function finalizarCriacao(){
 function criadoComSucesso(id){
     alert("sucesso!!");
     console.log(id);
+    let meus = JSON.parse(localStorage.getItem("idQuizz"));
+    let meusId = meus.push(id);
+    localStorage.setItem("idQuizz", JSON.stringify([meusId]));
+    // chamar a função dela
 }
 
 function erroNaCriacao(erro){
