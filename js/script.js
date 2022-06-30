@@ -206,6 +206,8 @@ function renderizarResultado() { //Inserir o HTML do resultado do quizz
     let descricaoNivel = "";
     
     const niveis = quizzExibido.levels;
+    niveis.sort((a,b) => a.minValue - b.minValue);
+    console.log(niveis);
     for (let i=0; i<niveis.length; i++) {
         if (porcentAcerto >= niveis[i].minValue && niveis[i+1] === undefined) {
             tituloNivel = niveis[i].title;
