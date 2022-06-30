@@ -257,9 +257,9 @@ function reiniciar() { //Reiniciar quizz
 let quizzCriado = {
     title: "",
     image: "",
-    questions: [],
-    levels: []
-};
+    questions: [3],
+    levels: [2]
+}; // mudaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar
 
 function carregarTela3(){
     telaPrincipal.innerHTML = `
@@ -287,8 +287,11 @@ function verificarComeco(){
     ok += verificarQtd(document.getElementById("qtPergunta"),3);
     ok += verificarQtd(document.getElementById("qtNivel"),2);
     if (ok === 0){
-        //add no obj
-        carregarParte2(3); //lincar numPerg
+        quizzCriado.title = document.getElementById("titulo").value;
+        quizzCriado.image = document.getElementById("urlComeco").value;
+        quizzCriado.questions.push(document.getElementById("qtPergunta").value);
+        quizzCriado.levels.push(document.getElementById("qtNivel").value);
+        carregarParte2(document.getElementById("qtPergunta").value); 
     }
 }
 
@@ -297,7 +300,7 @@ function carregarParte2(numPerguntas){
     <div class="tela3">
         <div class="criacaoTitulo">Crie suas perguntas</div>
         <div class="perguntas"></div>
-        <div class="criacaoBt" onclick='verificarComeco()'>Prosseguir pra criar perguntas</div>      
+        <div class="criacaoBt" onclick='verificarParte2()'>Prosseguir pra criar níveis</div>      
     </div>
     `;
     for(let i=0;i<numPerguntas;i++){
@@ -319,21 +322,22 @@ function carregarParte2(numPerguntas){
             <div class="criacaoMiniTitulo">Respostas incorretas</div>
             <input type="text" id="errada1Perg${i+1}" placeholder="Resposta incorreta 1">
             <div class="erro"></div>
-            <input type="text" id="erradaUrl1CorretaPerg${i+1}" placeholder="URL da imagem 1">
+            <input type="text" id="erradaUrl1Perg${i+1}" placeholder="URL da imagem 1">
             <div class="erro"></div>
             </br>
             <input type="text" id="errada2Perg${i+1}" placeholder="Resposta incorreta 2">
             <div class="erro"></div>
-            <input type="text" id="erradaUrl2CorretaPerg${i+1}" placeholder="URL da imagem 2">
+            <input type="text" id="erradaUrl2Perg${i+1}" placeholder="URL da imagem 2">
             <div class="erro"></div>
             </br>
             <input type="text" id="errada3Perg${i+1}" placeholder="Resposta incorreta 3">
             <div class="erro"></div>
-            <input type="text" id="erradaUrl3CorretaPerg${i+1}" placeholder="URL da imagem 3">
+            <input type="text" id="erradaUrl3Perg${i+1}" placeholder="URL da imagem 3">
             <div class="erro"></div>
         </div>
-        <div class="surdina criacaoForm">
-            <div onclick="abrirFechar(this,'tituloPerg${i+1}')" id="pergSec${i+1}" class="criacaoMiniTitulo">Pergunta ${i+1}</div>
+        <div class="surdina criacaoForm exp">
+            <div id="pergSec${i+1}" class="criacaoMiniTitulo">Pergunta ${i+1}</div>
+            <img onclick="abrirFechar(this,'tituloPerg${i+1}')" src="./images/edit.png" > 
         </div>
         `; 
         if(i>0){
@@ -348,24 +352,108 @@ function abrirFechar(elemento, idDoPar){
 }
 
 function verificarParte2(){
+    let ok = 0;
+    let nPerg = quizzCriado.questions[0];
+    quizzCriado.questions = [];
+    let nsResp = [];
+    for(let i=0;i<nPerg;i++){
+        ok += verificarTexto(document.getElementById("tituloPerg"+(i+1)),20);
+        ok += verificarCor(document.getElementById("corPerg"+(i+1)));
+        ok += verificarTexto(document.getElementById("corretaPerg"+(i+1)));
+        ok += verificarUrl(document.getElementById("urlCorretaPerg"+(i+1)));
+        ok += verificarTexto(document.getElementById("errada1Perg"+(i+1)));
+        ok += verificarUrl(document.getElementById("erradaUrl1Perg"+(i+1)));
 
+        let nResp = 1;
+        if(document.getElementById("errada2Perg"+(i+1)).value !== "" || document.getElementById("erradaUrl2Perg"+(i+1)).value !== ""){
+            ok += verificarTexto(document.getElementById("errada2Perg"+(i+1)));
+            ok += verificarUrl(document.getElementById("erradaUrl2Perg"+(i+1)));
+            nResp++;
+        }
+        if(document.getElementById("errada3Perg"+(i+1)).value !== "" || document.getElementById("erradaUrl3Perg"+(i+1)).value !== ""){
+            ok += verificarTexto(document.getElementById("errada3Perg"+(i+1)));
+            ok += verificarUrl(document.getElementById("erradaUrl3Perg"+(i+1)));
+            nResp++;
+        }
+        nsResp.push(nResp);
+    } 
+    if (ok === 0){
+        for(let i=0;i<nPerg;i++){
+            let objPerg ={
+                title: "",
+                color: "",
+                answers: []
+            };
+            let objResp ={
+                text: "",
+                image: "",
+                isCorrectAnswer: true
+            };
+            objPerg.title = document.getElementById("tituloPerg"+(i+1)).value;
+            objPerg.color = document.getElementById("corPerg"+(i+1)).value;
+            
+            objResp.text = document.getElementById("corretaPerg"+(i+1)).value;
+            objResp.image = document.getElementById("urlCorretaPerg"+(i+1)).value;
+            objResp.isCorrectAnswer = true;
+            console.log(objResp);
+            objPerg.answers.push(objResp);
+            for(let h=0;h<nsResp[i];h++){
+                let objResp2 ={
+                    text: "",
+                    image: "",
+                    isCorrectAnswer: true
+                };
+                objResp2.text = document.getElementById("errada"+ (h+1) +"Perg"+(i+1)).value;
+                objResp2.image = document.getElementById("erradaUrl"+ (h+1) +"Perg"+(i+1)).value;
+                objResp2.isCorrectAnswer = false;
+                objPerg.answers.push(objResp2);    
+            }    
+        quizzCriado.questions.push(objPerg);
+        }
+        carregarParte3(quizzCriado.levels[0]);
+    }
+}
+
+function carregarParte3(numNiveis){
+    alert("oi");
+    console.log(quizzCriado);
+    telaPrincipal.innerHTML = `
+    
+    `;
+}
+
+function verificarCor(elemento){
+    if(elemento.value[0] !== '#'){
+        elemento.nextElementSibling.innerHTML = "Escreva uma cor em hexadecimal iniciada por #";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else if(elemento.value.split('#')[1].length !== 6 || naoHexa(elemento.value.split('#')[1].toUpperCase())){
+        elemento.nextElementSibling.innerHTML = "Escreve 6 valores em hexadecimal após o #";
+        elemento.style.backgroundColor = "#FFE9E9";
+        return 1;
+    }else{
+        elemento.nextElementSibling.innerHTML = "";
+        elemento.style.backgroundColor = "#FFFFFF";
+        return 0;
+    }
 }
 
 function verificarTexto(elemento,min=0,max=Number.POSITIVE_INFINITY){
-    if(elemento.value.length === 0 && min !== 0){
+    if(elemento.value.length === 0 && min === 0){
         elemento.nextElementSibling.innerHTML = "Texto não pode estar vazio";
         elemento.style.backgroundColor = "#FFE9E9";
         return 1;
     }else if(elemento.value.length < min){
-        elemento.nextElementSibling.innerHTML = "Deve ter no mínimo " + min + "caracteres";
+        elemento.nextElementSibling.innerHTML = "Deve ter no mínimo " + min + " caracteres";
         elemento.style.backgroundColor = "#FFE9E9";
         return 1;
     }else if(elemento.value.length > max){
-        elemento.nextElementSibling.innerHTML = "Deve ter no máximo " + max + "caracteres";
+        elemento.nextElementSibling.innerHTML = "Deve ter no máximo " + max + " caracteres";
         elemento.style.backgroundColor = "#FFE9E9";
         return 1;
     }else { 
         elemento.nextElementSibling.innerHTML = "";
+        elemento.style.backgroundColor = "#FFFFFF";
         return 0;
     }
 }
@@ -377,6 +465,7 @@ function verificarUrl(elemento){
         return 1;
     }else { 
         elemento.nextElementSibling.innerHTML = "";
+        elemento.style.backgroundColor = "#FFFFFF";
         return 0;
     }
 }
@@ -396,6 +485,7 @@ function verificarQtd(elemento,min=0,max=Number.POSITIVE_INFINITY){
         return 1;
     }else { 
         elemento.nextElementSibling.innerHTML = "";
+        elemento.style.backgroundColor = "#FFFFFF";
         return 0;
     }
 }
@@ -408,3 +498,13 @@ function urlValida(string) {
         return false;
    }
  }
+
+ function naoHexa(valor){
+    for(let i=0;i<valor.length;i++){
+        if(isNaN(valor[i]) && valor[i] !== "A" && valor[i] !== "B" && valor[i] !== "C" && valor[i] !== "D" && valor[i] !== "E" && valor[i] !== "F"){
+            return true;
+        }
+    } return false;
+ }
+
+ /* carregarParte2(3); */
