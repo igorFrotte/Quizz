@@ -373,7 +373,6 @@ function verificarParte2(){
         }
         nsResp.push(nResp);
     } 
-    console.log("ok é "+ok);
     if (ok === 0){
         quizzCriado.questions = [];
         for(let i=0;i<nPerg;i++){
@@ -392,7 +391,6 @@ function verificarParte2(){
             
             objResp.text = document.getElementById("corretaPerg"+(i+1)).value;
             objResp.image = document.getElementById("urlCorretaPerg"+(i+1)).value;
-            console.log(objResp);
             objPerg.answers.push(objResp);
             for(let h=0;h<nsResp[i];h++){
                 let objResp2 ={
@@ -404,7 +402,7 @@ function verificarParte2(){
                 objResp2.image = document.getElementById("erradaUrl"+ (h+1) +"Perg"+(i+1)).value;
                 objPerg.answers.push(objResp2);    
             }    
-        quizzCriado.questions.push(objPerg);
+            quizzCriado.questions.push(objPerg);
         }
         carregarParte3(quizzCriado.levels[0]);
     }
@@ -456,13 +454,43 @@ function verificarParte3(){
         }
     }
     if(semPorc0 === 0){
-        ok += semNivel0();
+        ok += erroNoNivel(-1);
     }
     ok += niveisIguais(); //verifica niveis iguais
     if (ok === 0){
         quizzCriado.levels = [];
         alert("oi");
+
+        for(let i=0;i<nNiveis;i++){
+            let objNivel ={
+                title: "",
+				image: "",
+				text: "",
+				minValue: 0
+            };
+            objNivel.title = document.getElementById("tituloNivel"+(i+1)).value;
+            objNivel.minValue = Number(document.getElementById("porcNivel"+(i+1)).value);
+            objNivel.image = document.getElementById("urlNivel"+(i+1)).value;
+            objNivel.text = document.getElementById("descNivel"+(i+1)).value;  
+            quizzCriado.levels.push(objNivel);
+        }
+        finalizarCriacao();
     }
+}
+
+function finalizarCriacao(){
+    const requisicao = axios.post(url, quizzCriado);
+    requisicao.then(criadoComSucesso);
+    requisicao.catch(erroNaCriacao);
+}
+
+function criadoComSucesso(id){
+    alert("sucesso!!");
+    console.log(id);
+}
+
+function erroNaCriacao(erro){
+    alert("deu ruim :/");
 }
 
 function abrirFechar(elemento, idDoPar){
@@ -470,10 +498,10 @@ function abrirFechar(elemento, idDoPar){
     document.getElementById(idDoPar).parentNode.classList.toggle("surdina");
 }
 
-function semNivel0(){
+function erroNoNivel(n){
     let niveis = document.querySelectorAll(".cadaNivel");
     for(let i=0;i<niveis.length;i++){
-        verificacaoExtra(niveis[i],-1);
+        verificacaoExtra(niveis[i],n);
     }
     return 1;
 }
@@ -486,10 +514,7 @@ function niveisIguais(){
     for(let i=0;i<niveis.length;i++){
         let filtro = niveis.filter((e) => e === niveis[i]);
         if(filtro.length > 1){
-            let ni = document.querySelectorAll(".cadaNivel");
-            for(let j=0;j<ni.length;j++){
-                verificacaoExtra(ni[j],-2);
-            }
+            erroNoNivel(-2);
             return 1;
         }
     }return 0;
