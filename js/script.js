@@ -1,6 +1,6 @@
 //1.Tela Principal - Listagem dos Quizzes
 let telaPrincipal = document.querySelector(".tela");
-let url = "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes";
+let url = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes";
 let meusQuizzes = [];
 
 function recarregar() {

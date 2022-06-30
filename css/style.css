@@ -171,6 +171,8 @@ body {
     font-size: 39px;
     line-height: 227px;
     text-align: center;
+    word-wrap: break-word;
+    overflow: hidden;
 
     position: absolute;
     top: 0;
@@ -194,6 +196,7 @@ body {
     height: 138px;
     margin-bottom: 20px;
     background-color: #434CA0;
+    word-wrap: break-word;
 
     color: #FFFFFF;
     font-weight: 700;
@@ -217,7 +220,6 @@ body {
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 .nao-selecionada {
     background-color: #FFFFFF;
@@ -226,6 +228,7 @@ body {
 .imagem-resposta {
     width: 100%;
     height: 175.2px;
+    margin-bottom: 7.75px;
     object-fit: cover;
 }
 .texto-resposta {
@@ -387,7 +390,7 @@ body {
 /* Responsividade */
 
 @media (max-width: 1100px) {
-
+/*Tela1*/
 .tela1 {
     width: 100%;
     margin: 0 16px;
@@ -410,4 +413,53 @@ body {
     width: 100%;
 }
 
+/*Tela 2*/
+.capa {
+    height: 142px;
+}
+.titulo {
+    font-size: 19px;
+    line-height: 142px;
+}
+.conteudo-quizz {
+    width: 100%;
+}
+.pergunta {
+    padding: 18px;
+    margin-bottom: 28px;
+}
+.texto-pergunta {
+    height: 89px;
+    line-height: 89px;
+    font-size: 19px;
+}
+.resposta {
+    width: 47%;
+    height: 160px;
+    margin-bottom: 12px;
+}
+.imagem-resposta {
+    height: 120px;
+    margin-bottom: 5px;
+}
+.texto-resposta {
+    font-size: 13px;
+    line-height: 15.23px;
+}
+.resultado {
+    margin-bottom: 34px;
+}
+.nivel {
+    word-wrap: break-word;
+    height: 100%;
+    font-size: 19px;
+}
+.descricao-nivel {
+    flex-direction: column;
+}
+.imagem-nivel {
+    width: 100%;
+    height: auto;
+    margin-bottom: 9px;
+}
 }
