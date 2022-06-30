@@ -122,7 +122,9 @@ function renderizarPerguntas() { //Renderizar as perguntas de acordo com o taman
     for (let i=0; i<quizzExibido.questions.length; i++) {
         divConteudo.innerHTML += `
         <div class="pergunta" id="perg${i}">
-            <div class="texto-pergunta">${quizzExibido.questions[i].title}</div>
+            <div class="texto-pergunta">
+                <p>${quizzExibido.questions[i].title}</p>
+            </div>
             <div class="respostas"></div>
         </div>
         `;
@@ -188,7 +190,7 @@ function respostaAoClick(elemento,i) { //Efeito selecionado e troca de cor, de a
 
     setTimeout(function(){ //Após dois segundos do clique na resposta, faça aparecer o próximo elemento
         if (divPergunta.nextElementSibling === null) {
-            document.querySelector('.resultado').scrollIntoView({block: "center", inline: "nearest"});
+            document.querySelector('.resultado').scrollIntoView({block: "start", inline: "nearest"});
         } else {
             divPergunta.nextElementSibling.scrollIntoView({block: "center", inline: "nearest"});
         }
@@ -224,7 +226,9 @@ function renderizarResultado() { //Inserir o HTML do resultado do quizz
     let divConteudo = document.querySelector('.conteudo-quizz');
     divConteudo.innerHTML += `
     <div class="resultado">
-        <div class="nivel">${porcentAcerto}% de acerto: ${tituloNivel}</div>
+        <div class="nivel">
+            <p>${porcentAcerto}% de acerto: ${tituloNivel}</p>
+        </div>
         <div class="descricao-nivel">
             <img src="${imagemNivel}" class="imagem-nivel" />
             <div class="texto-nivel">${descricaoNivel}</div>
@@ -510,3 +514,29 @@ function urlValida(string) {
  }
 
  /* carregarParte2(3); */
+
+ function carregarTela3ponto4(idQuizz) {
+    const promessa = axios.get(url);
+    promessa.then(function (elemento) {
+        for (let i=0; i<elemento.data.length; i++) {
+            if (elemento.data[i].id === idQuizz) {
+                quizzExibido = elemento.data[i];
+            }
+        }
+        renderizarTela3ponto4(idQuizz);
+    });
+ }
+ function renderizarTela3ponto4(idQuizz) {
+    telaPrincipal.innerHTML = `
+    <div class="tela3ponto4">
+        <p>Seu quiz está pronto!</p>
+        <div class="capa-sucesso">
+            <img src="${quizzExibido.image}" />
+            <p>${quizzExibido.title}</p>
+            <div></div>
+        </div>
+        <div class="acessar-quizz" onclick="carregarTela2(${idQuizz})">Acessar quizz</div>
+        <div class="voltar-home" onclick="carregarTela1()">Voltar para a home</div>
+    </div>
+    `;
+ }
