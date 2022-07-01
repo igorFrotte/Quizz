@@ -639,7 +639,7 @@ function urlValida(string) {
     <div class="tela3ponto4">
         <div class="conteudo-sucesso">
             <p>Seu quiz está pronto!</p>
-            <div class="capa-sucesso">
+            <div class="capa-sucesso" onclick="carregarTela2(${idQuizz})">
                 <img src="${quizzExibido.image}" />
                 <p>${quizzExibido.title}</p>
                 <div></div>

@@ -427,6 +427,7 @@ body {
     height: 266px;
     margin-bottom: 45px;
     position: relative;
+    cursor: pointer;
 }
 .capa-sucesso > img {
     width: 100%;
