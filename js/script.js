@@ -459,7 +459,6 @@ function verificarParte3(){
     ok += niveisIguais(); //verifica niveis iguais
     if (ok === 0){
         quizzCriado.levels = [];
-        alert("oi");
 
         for(let i=0;i<nNiveis;i++){
             let objNivel ={
