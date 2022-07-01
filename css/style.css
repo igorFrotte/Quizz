@@ -300,6 +300,7 @@ body {
     font-weight: 700;
     font-size: 19px;
     line-height: 25px;
+    word-break: break-word;
 }
 .reiniciar-quizz {
     width: 261.18px;
