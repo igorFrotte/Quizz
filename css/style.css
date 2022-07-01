@@ -361,7 +361,7 @@ body {
     margin-bottom: 25px;
 
 }
-.criacaoForm input{
+.criacaoForm input,textarea{
     width: 100%;
     height: 46px;
     border: 1px solid #D1D1D1;
@@ -377,6 +377,18 @@ body {
     line-height: 22px;
     color: #BABABA;
     padding: 20px;
+}
+.criacaoForm textarea::placeholder {
+    font-style: italic;
+    font-family: 'Roboto';
+    font-size: 19px;
+    line-height: 22px;
+    color: #BABABA;
+    padding-left: 20px;
+}
+.criacaoForm textarea{
+    padding-top: 10px;
+    resize: none;
 }
 .erro {
     display: flex;
@@ -573,12 +585,16 @@ body {
     line-height: 23.44px;
 }
 .criacaoForm {
-    width: 100%;
+    width: 375px;
     padding: 15px;
 }
 .criacaoBt {
     width: 325px;
     font-size: 18px;
+}
+.criacaoForm textarea{
+    width: 340px;
+    height: 180px;
 }
 
 /*Tela 3.4*/
