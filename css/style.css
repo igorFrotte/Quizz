@@ -97,10 +97,9 @@ body {
     cursor: pointer;
 }
 .galeriaQuizz{
-    width: 100%;
+    width: 1065px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 .galeriaQuizz img{
     width: 340px;
@@ -109,6 +108,7 @@ body {
 }
 .galeriaQuizz > div {
     position: relative;
+    margin-right: 15px;
     margin-bottom: 12px;
     width: 340px;
     height: 181px;
@@ -362,7 +362,8 @@ body {
     height: 46px;
     border: 1px solid #D1D1D1;
     border-radius: 5px;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     font-size: 21px;
     line-height: 25px;
 }
@@ -485,9 +486,13 @@ body {
 }
 .tela1 {
     width: 90%; 
-} 
+}
+.galeriaQuizz {
+    width: 100%;
+}
 .galeriaQuizz > div {
     width: 100%;
+    margin-right: 0px;
 }
 .seuQuizz {
     width: 100%;
@@ -549,6 +554,23 @@ body {
     height: auto;
     margin-bottom: 9px;
 }
+/*Tela 3*/
+.tela3 {
+    margin-top: 106px;
+}
+.criacaoTitulo {
+    font-size: 20px;
+    line-height: 23.44px;
+}
+.criacaoForm {
+    width: 100%;
+    padding: 15px;
+}
+.criacaoBt {
+    width: 325px;
+    font-size: 18px;
+}
+
 /*Tela 3.4*/
 .conteudo-sucesso {
     width: 90%;
