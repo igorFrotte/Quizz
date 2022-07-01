@@ -30,9 +30,10 @@ function listarQuizzes(elemento){
     meusQuizzes = JSON.parse(localStorage.getItem("idQuizz"));
     let galeria = document.querySelector(".galeriaQuizz");
     let quizz = document.querySelector(".seuQuizz");
-    listarSeusQuizzes(); 
+    listarSeusQuizzes();
     for(let i=0;i<elemento.data.length;i++){
-        if(meusQuizzes.includes(elemento.data[i].id)){
+        let arrayQuizz = meusQuizzes.filter((e) => e.id === elemento.data[i].id);
+        if(arrayQuizz.length > 0){
             quizz.innerHTML += `
             <div onclick="carregarTela2(${elemento.data[i].id})">
                 <img src="${elemento.data[i].image}">
@@ -482,13 +483,14 @@ function finalizarCriacao(){
     requisicao.catch(erroNaCriacao);
 }
 
-function criadoComSucesso(id){
-    alert("sucesso!!");
-    console.log(id);
-    let meus = JSON.parse(localStorage.getItem("idQuizz"));
-    let meusId = meus.push(id);
-    localStorage.setItem("idQuizz", JSON.stringify([meusId]));
-    carregarTela3ponto4(id);
+function criadoComSucesso(objCriado){
+    let meusId = [];
+    if(localStorage.getItem("idQuizz") !== null){
+        JSON.parse(localStorage.getItem("idQuizz")).map((e) => meusId.push(e));
+    }
+    meusId.push(objCriado.data);
+    localStorage.setItem("idQuizz", JSON.stringify(meusId));
+    carregarTela3ponto4(objCriado.data.id);
 }
 
 function erroNaCriacao(erro){
