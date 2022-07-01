@@ -97,10 +97,9 @@ body {
     cursor: pointer;
 }
 .galeriaQuizz{
-    width: 100%;
+    width: 1065px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 .galeriaQuizz img{
     width: 340px;
@@ -109,6 +108,7 @@ body {
 }
 .galeriaQuizz > div {
     position: relative;
+    margin-right: 15px;
     margin-bottom: 12px;
     width: 340px;
     height: 181px;
@@ -300,6 +300,7 @@ body {
     font-weight: 700;
     font-size: 19px;
     line-height: 25px;
+    word-break: break-word;
 }
 .reiniciar-quizz {
     width: 261.18px;
@@ -362,7 +363,8 @@ body {
     height: 46px;
     border: 1px solid #D1D1D1;
     border-radius: 5px;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     font-size: 21px;
     line-height: 25px;
 }
@@ -408,21 +410,31 @@ body {
 }
 
 /*Começo da tela 3.4*/
-.tela3ponto4 > p {
+.conteudo-sucesso {
+    width: 500px;
+    margin: 135px auto 0px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.conteudo-sucesso > p {
     font-weight: 700;
     font-size: 23px;
     line-height: 26.95px;
-    margin: 141px auto 46px auto;
+    margin-bottom: 46px;
 }
 .capa-sucesso {
-    width: 500px;
+    width: 100%;
     height: 266px;
-    border-radius: 5px;
+    margin-bottom: 45px;
+    position: relative;
+    cursor: pointer;
 }
 .capa-sucesso > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 5px;
 }
 .capa-sucesso > p {
     position: absolute;
@@ -476,9 +488,13 @@ body {
 }
 .tela1 {
     width: 90%; 
-} 
+}
+.galeriaQuizz {
+    width: 100%;
+}
 .galeriaQuizz > div {
     width: 100%;
+    margin-right: 0px;
 }
 .seuQuizz {
     width: 100%;
@@ -539,5 +555,40 @@ body {
     width: 100%;
     height: auto;
     margin-bottom: 9px;
+}
+/*Tela 3*/
+.tela3 {
+    margin-top: 106px;
+}
+.criacaoTitulo {
+    font-size: 20px;
+    line-height: 23.44px;
+}
+.criacaoForm {
+    width: 100%;
+    padding: 15px;
+}
+.criacaoBt {
+    width: 325px;
+    font-size: 18px;
+}
+
+/*Tela 3.4*/
+.conteudo-sucesso {
+    width: 90%;
+    margin: 108px auto 38px auto;
+}
+.capa-sucesso {
+    margin-bottom: 24px;
+}
+.acessar-quizz {
+    width: 221px;
+    height: 44px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 44px;
+}
+.voltar-home {
+    font-size: 18px;
 }
 }
