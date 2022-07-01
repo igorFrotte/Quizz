@@ -1,4 +1,5 @@
 //1.Tela Principal - Listagem dos Quizzes
+
 let telaPrincipal = document.querySelector(".tela");
 let url = "https://mock-api.driven.com.br/api/v7/buzzquizz/quizzes";
 let meusQuizzes = [];
@@ -78,6 +79,7 @@ function listarSeusQuizzes(){
 }
 
 //2.Tela de Exibição de um Quizz
+
 let quizzExibido;
 let respostaClicada;
 let contAcertos = 0;
@@ -253,14 +255,14 @@ function reiniciar() { //Reiniciar quizz
     document.querySelector('.resultado').parentNode.removeChild(document.querySelector('.resultado'));
 }
 
-
 //3.Tela de Criação de um Quizz
+
 let quizzCriado = {
     title: "",
     image: "",
     questions: [],
     levels: []
-}; // mudaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar
+}; 
 
 function carregarTela3(){
     telaPrincipal.innerHTML = `
@@ -441,7 +443,7 @@ function carregarParte3(numNiveis){
 
 function verificarParte3(){
     let ok = 0;
-    let nNiveis =2;//quizzCriado.levels[0];
+    let nNiveis = quizzCriado.levels[0];
     let semPorc0 = 0;
     for(let i=0;i<nNiveis;i++){
         ok += verificarTexto(document.getElementById("tituloNivel"+(i+1)),10);
@@ -622,8 +624,6 @@ function urlValida(string) {
         }
     } return false;
  }
-
- /* carregarParte2(3); */
 
  function carregarTela3ponto4(idQuizz) {
     const promessa = axios.get(url);

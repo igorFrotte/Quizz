@@ -55,7 +55,6 @@ body {
     border-radius: 5px;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
 }
 .seuQuizz > .semQuizz {
@@ -66,7 +65,7 @@ body {
     display: flex;
     align-items: center;
     text-align: center;
-    margin-bottom: 30px;
+    margin: 30px 0;
 }
 .seuQuizz > .btCriar {
     width: 151px;
@@ -126,7 +125,10 @@ body {
 }
 .galeriaQuizz > div > p{
     position: absolute;
-    height: 54px;
+    min-height: 54px;
+    max-height: 80%;
+    max-width: 90%;
+    word-wrap: break-word;
     left: 18px;
     bottom: 10px;
     font-size: 19px;
@@ -303,7 +305,7 @@ body {
     word-break: break-word;
 }
 .reiniciar-quizz {
-    width: 261.18px;
+    max-width: 260px;
     height: 52px;
     margin: 0px auto 20px auto;
     border-radius: 15px;
@@ -556,7 +558,12 @@ body {
     height: auto;
     margin-bottom: 9px;
 }
+.reiniciar-quizz {
+    max-width: 220px;
+}
+
 /*Tela 3*/
+
 .tela3 {
     margin-top: 106px;
 }
@@ -574,6 +581,7 @@ body {
 }
 
 /*Tela 3.4*/
+
 .conteudo-sucesso {
     width: 90%;
     margin: 108px auto 38px auto;
