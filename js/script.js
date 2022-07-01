@@ -442,7 +442,7 @@ function carregarParte3(numNiveis){
 
 function verificarParte3(){
     let ok = 0;
-    let nNiveis = 3; //quizzCriado.levels[0];
+    let nNiveis = quizzCriado.levels[0];
     let semPorc0 = 0;
     for(let i=0;i<nNiveis;i++){
         ok += verificarTexto(document.getElementById("tituloNivel"+(i+1)),10);
