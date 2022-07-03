@@ -517,6 +517,7 @@ body {
 .titulo {
     font-size: 19px;
     line-height: 142px;
+    word-break: break-word;
 }
 .conteudo-quizz {
     width: 100%;

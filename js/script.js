@@ -107,7 +107,7 @@ function renderizarQuizz() { //Inserir o HTML do quizz
         </div>
         <div class="conteudo-quizz"></div>
         <div class="reiniciar-quizz" onclick="reiniciar()">Reiniciar quizz</div>
-        <div class="voltar-home" onclick="carregarTela1()">Voltar para a home</div>
+        <div class="voltar-home" onclick="recarregar()">Voltar para a home</div>
     </div>
     `;
     renderizarPerguntas();
@@ -196,7 +196,7 @@ function respostaAoClick(elemento,i) { //Efeito selecionado e troca de cor, de a
 
 function renderizarResultado() { //Inserir o HTML do resultado do quizz
     const porcentAcerto = Math.round((contAcertos/Number(quizzExibido.questions.length))*100); //A porcentagem de acerto é o arredondamento da divisão da quantidade de acertos pela quantidade de questões (x100)
-
+    
     //Se a porcentagem de acerto for maior do que o valor mínimo do nível e menor do que o valor mínimo do nível seguinte,
     //deve-se adicionar o título, imagem e descrição daquele nível.
     //Caso seja o último nível, deve-se verificar apenas se a porcentagem de acerto é maior do que o valor mínimo do nível
@@ -206,7 +206,7 @@ function renderizarResultado() { //Inserir o HTML do resultado do quizz
     
     const niveis = quizzExibido.levels;
     niveis.sort((a,b) => a.minValue - b.minValue);
-    console.log(niveis);
+    
     for (let i=0; i<niveis.length; i++) {
         if (porcentAcerto >= niveis[i].minValue && niveis[i+1] === undefined) {
             tituloNivel = niveis[i].title;
@@ -647,7 +647,7 @@ function urlValida(string) {
                 <div></div>
             </div>
             <div class="acessar-quizz" onclick="carregarTela2(${idQuizz})">Acessar quizz</div>
-            <div class="voltar-home" onclick="carregarTela1()">Voltar para a home</div>
+            <div class="voltar-home" onclick="recarregar()">Voltar para a home</div>
         </div>
     </div>
     `;
