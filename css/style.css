@@ -148,7 +148,7 @@ body {
     margin: auto;
 }
 .capa {
-    width: 100vw;
+    width: 100%;
     height: 227px;
     margin-top: 70px;
 
@@ -176,12 +176,13 @@ body {
     text-shadow: 1px 1px #000000;
     font-weight: 400;
     font-size: 39px;
-    line-height: 227px;
+    line-height: 46px;
     text-align: center;
     word-break: break-word;
-    overflow: hidden;
-
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     top: 0;
     left: 0;
 }
@@ -360,7 +361,7 @@ body {
     margin-bottom: 25px;
 
 }
-.criacaoForm input{
+.criacaoForm input,textarea{
     width: 100%;
     height: 46px;
     border: 1px solid #D1D1D1;
@@ -376,6 +377,18 @@ body {
     line-height: 22px;
     color: #BABABA;
     padding: 20px;
+}
+.criacaoForm textarea::placeholder {
+    font-style: italic;
+    font-family: 'Roboto';
+    font-size: 19px;
+    line-height: 22px;
+    color: #BABABA;
+    padding-left: 20px;
+}
+.criacaoForm textarea{
+    padding-top: 10px;
+    resize: none;
 }
 .erro {
     display: flex;
@@ -516,7 +529,7 @@ body {
 }
 .titulo {
     font-size: 19px;
-    line-height: 142px;
+    line-height: 22px;
     word-break: break-word;
 }
 .conteudo-quizz {
@@ -572,13 +585,24 @@ body {
     font-size: 20px;
     line-height: 23.44px;
 }
+.niveis{
+    width: 100%;
+}
+.perguntas{
+    width: 100%;
+}
 .criacaoForm {
     width: 100%;
     padding: 15px;
 }
 .criacaoBt {
-    width: 325px;
+    width: 100%;
+    max-width: 325px;
     font-size: 18px;
+}
+.criacaoForm textarea{
+    width: 100%;
+    height: 180px;
 }
 
 /*Tela 3.4*/

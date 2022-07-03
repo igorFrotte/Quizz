@@ -24,7 +24,7 @@ function carregarTela1(){
     </div>
     `;
     const promessa = axios.get(url);
-    promessa.then(listarQuizzes); 
+    promessa.then(listarQuizzes);
 }
 
 function listarQuizzes(elemento){
@@ -137,7 +137,6 @@ function aleatorizar() { //Embaralhar o array de respostas de cada pergunta
 function renderizarRespostas(i) { //Renderizar as respostas de acordo com o tamanho do array de quizzExibido.questions[i].answers, sendo 'i' o índice da pergunta
     let divRespostas = document.querySelector(`#perg${i} .respostas`);
     quizzExibido.questions[i].answers.sort(aleatorizar);
-
     for (let j=0; j<quizzExibido.questions[i].answers.length; j++) {
         divRespostas.innerHTML += `
         <div class="resposta" onclick="respostaAoClick(this,${i})">
@@ -161,8 +160,8 @@ function respostaAoClick(elemento,i) { //Efeito selecionado e troca de cor, de a
     }
     //Caso não exista, a classe 'nao-selecionada' será adicionada a todas as respostas e retirada do elemento clicado, 
     //que também recebe a classe 'selecionada'
-    for (let i=0; i<todasAsRespostas.length; i++) {
-        todasAsRespostas[i].classList.add('nao-selecionada');
+    for (let h=0; h<todasAsRespostas.length; h++) {
+        todasAsRespostas[h].classList.add('nao-selecionada');
     }
     elemento.classList.remove('nao-selecionada');
     elemento.classList.add('selecionada');
@@ -427,7 +426,7 @@ function carregarParte3(numNiveis){
             <div class="erro"></div>
             <input type="url" id="urlNivel${i+1}" placeholder="URL da imagem do nível">
             <div class="erro"></div>
-            <input type="text" id="descNivel${i+1}" placeholder="Descrição do nível">
+            <textarea type="text" id="descNivel${i+1}" placeholder="Descrição do nível"></textarea>
             <div class="erro"></div>
         </div>
         <div class="surdina criacaoForm exp">
@@ -460,7 +459,6 @@ function verificarParte3(){
     ok += niveisIguais(); //verifica niveis iguais
     if (ok === 0){
         quizzCriado.levels = [];
-        alert("oi");
 
         for(let i=0;i<nNiveis;i++){
             let objNivel ={
